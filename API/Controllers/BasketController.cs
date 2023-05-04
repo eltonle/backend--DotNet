@@ -40,7 +40,7 @@ public class BasketController : BaseApiController
        //get product
        var product = await _context.Products.FindAsync(productId);
        
-       if(product == null) return NotFound();
+       if(product == null) return BadRequest(new ProblemDetails{Title ="Product Not Found"});
 
        basket.AddIten(product, quantity);
 
@@ -48,7 +48,7 @@ public class BasketController : BaseApiController
        
        if(result) return CreatedAtRoute("GetBasket", MapBasketToDto(basket));
 
-       return BadRequest(new ProblemDetails{Title = "Probleme saving item to basket"});
+       return BadRequest(new ProblemDetails{Title = "Problem saving item to basket"});
     }
 
     [HttpDelete]
